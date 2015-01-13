@@ -1,0 +1,7 @@
+1, This package is built largely based on the Bs2MuMu p+p BPH software, therefore the credit should be mostly given to the corresponding authors.
+
+2, This package is used for HIN D meson analysis and works for pp, pPb and PbPb data and simulation
+
+3, The cfg files are in UserCode/OpenHF/test. There are cfg files to run D meson reconstrucion together with some steps from hi forest. Presently there are 4 cfg files for PbPb/pp data/simulation
+
+4, To get the cfg files ready to run. One need get this package and get the standard hiforest setup. The hiforest setup is here: https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiForestSetup
