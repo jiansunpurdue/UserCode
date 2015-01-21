@@ -6,16 +6,19 @@ To run the D meson reconstruction and the foresting you need to follows the inst
 
 **Set up a forest environment and download the HF code**:
 
-ATTENTION: the standard forest framework does not work in our case. 
 Please follows carefully the following steps:
 
- * cmsrel CMSSW_5_3_24
- * cd CMSSW_5_3_24/src
+ * cmsrel CMSSW_5_3_20
+ * cd CMSSW_5_3_20/src
  * cmsenv
  * git cms-merge-topic -u CmsHI:forest_CMSSW_5_3_20
  * git clone https://github.com/jiansunpurdue/UserCode.git
  * scram b -j20
  
+ATTENTION: the standard CMSSW_5_3_20 forest framework does not work for official MC samples, which will be produced in CMSSW_5_3_24.
+So we need to use CMSSW_5_3_24 to forest the official MC samples (just change "cmsrel CMSSW_5_3_20" to "cmsrel CMSSW_5_3_24" in above
+instruction). Whether to move to CMSSW_5_3_24 for PbPb and pp data forest prodution needs to be checked.
+
 **Submit the foresting jobs**:
 
  * cd UserCode/OpenHF/test
