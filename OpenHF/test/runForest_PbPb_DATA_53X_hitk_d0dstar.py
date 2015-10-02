@@ -1,20 +1,16 @@
 import FWCore.ParameterSet.Config as cms
 
-
-hltFilter = "HLT_HIJet80_v*"
-trigResults = 'TriggerResults::HLT'
-
 process = cms.Process('HiForest')
-process.options = cms.untracked.PSet(
-    # wantSummary = cms.untracked.bool(True)
-#    SkipEvent = cms.untracked.vstring('ProductNotFound')
-)
-
+#process.options = cms.untracked.PSet(
+#    # wantSummary = cms.untracked.bool(True)
+##    SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
+#
 #process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
 #oncePerEventMode=cms.untracked.bool(True))
 #
 #process.Timing = cms.Service("Timing")
-
+#
 
 #####################################################################################
 # HiForest labelling info
@@ -38,14 +34,14 @@ process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
 #                            "/store/hidata/HIRun2011/HIHighPt/RECO/14Mar2014-v2/00012/0C0FD828-E5BE-E311-90AA-FA163E6AC682.root"
 #							"/store/user/mnguyen/HIHighPt/jetRegit_HIHighPt_Jet80_v1/ea21a976f39e8fe4f82ae523253849bf/regionalTracking_10_1_zvD.root"
-#							"file:/home/sun229/sl6_PbPb/cjetsample/files/04D4F50A-11AE-E311-8B9E-FA163EE7D8E5_rereco_MB.root"
-							"file:/home/sun229/sl6_PbPb/cjetsample/files/1CC46C43-99B9-E311-B9CF-FA163E4A10E1_highpt_rereco_run181913.root"
+							"file:/home/sun229/sl6_PbPb/cjetsample/files/04D4F50A-11AE-E311-8B9E-FA163EE7D8E5_rereco_MB.root"
+#							"file:/home/sun229/sl6_PbPb/cjetsample/files/1CC46C43-99B9-E311-B9CF-FA163E4A10E1_highpt_rereco_run181913.root"
 							)
                             )
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10))
+    input = cms.untracked.int32(-1))
 
 
 #####################################################################################
@@ -82,7 +78,7 @@ process.HeavyIonGlobalParameters = cms.PSet(
 #####################################################################################
 
 process.TFileService = cms.Service("TFileService",
-                                   fileName=cms.string("HiForestDmeson_PbPbdata_test.root"))
+                                   fileName=cms.string("HiForestDmeson_PbPbdata.root"))
 
 #####################################################################################
 # Additional Reconstruction and Analysis: Main Body
@@ -112,13 +108,13 @@ process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu5PFJetSequence_PbPb_data_cf
 
 process.jetSequences = cms.Sequence(#process.akPu3CaloJetSequence +
                                     #process.akVs3CaloJetSequence +
-                                    process.akVs3PFJetSequence +
-                                    process.akPu3PFJetSequence +
+                                    #process.akVs3PFJetSequence +
+                                    process.akPu3PFJetSequence #+
 
                                     #process.akPu4CaloJetSequence +
                                     #process.akVs4CaloJetSequence +
-                                    process.akVs4PFJetSequence +
-                                    process.akPu4PFJetSequence #+
+                                    #process.akVs4PFJetSequence +
+                                    #process.akPu4PFJetSequence #+
 
                                     #process.akPu5CaloJetSequence +
                                     #process.akVs5CaloJetSequence +
@@ -203,13 +199,13 @@ process.phiEcalRecHitSpikeFilter = cms.Path(process.hiEcalRecHitSpikeFilter )
 process.ana_step = cms.Path( process.hltanalysis *
                             process.hltobject *
                             process.hiEvtAnalyzer *
-                            process.jetSequences +
+#                            process.jetSequences +
 #                            process.photonStep_withReco *
 #                            process.pfcandAnalyzer +
 #                            process.rechitAna +
 #temp                            process.hltMuTree +
-                            process.HiForest #+
-#                            process.anaTrack 
+                            process.HiForest +
+                            process.anaTrack 
                             )
 
 
@@ -228,7 +224,7 @@ process.load("UserCode.OpenHF.HFRecoStuff_PbPb_cff")
 process.load("UserCode.OpenHF.HFCharm_PbPb_cff")
 
 
-process.d0Dump.trackPt = cms.untracked.double(1.5)
+process.d0Dump.trackPt = cms.untracked.double(1.0)
 
 process.dstarDump.trackPt = cms.untracked.double(2.0)
 process.dstarDump.slowPionPt= cms.untracked.double(0.5)
@@ -249,48 +245,32 @@ process.OpenHfTree_step = cms.Path(
 
 process.pAna = cms.EndPath(process.skimanalysis)
 
-##Filtering
-##############################################################
-## To filter on an HLT trigger path, uncomment the lines below, add the
-## HLT path you would like to filter on to 'HLTPaths' and also
-## uncomment the snippet at the end of the configuration.
-##############################################################
-## Minimum bias trigger selection (later runs)
-#process.load("HLTrigger.HLTfilters.hltHighLevel_cfi")
-#process.skimFilter = process.hltHighLevel.clone()
-##process.skimFilter.HLTPaths = ["HLT_HIJet80_v*"]
-##process.skimFilter.HLTPaths = ["HLT_HIJet55_v*",
-##                               "HLT_HIJet65_v*",
-##                               "HLT_HIJet80_v*",
-##                               "HLT_HIJet95_v*"
-##							   "HLT_HIDiJet55_v*",
-##                               "HLT_HIJet65_Jet55_v*"
-##							   ]
-##process.skimFilter.HLTPaths = ["HLT_HIMinBiasHfOrBSC_*",
-##                               "HLT_HIUCC*_*"
-##						       ]
-#process.skimFilter.HLTPaths = ["HLT_HIMinBiasHfOrBSC_v*"]
-#
-#process.superFilterSequence = cms.Sequence(process.skimFilter)
-#process.superFilterPath = cms.Path(process.superFilterSequence)
-#process.skimanalysis.superFilters = cms.vstring("superFilterPath")
-#################################################################
-##Filtering
-#for path in process.paths:
-#    getattr(process,path)._seq = process.superFilterSequence*getattr(process,path)._seq
-#
+#Filtering
+#############################################################
+# To filter on an HLT trigger path, uncomment the lines below, add the
+# HLT path you would like to filter on to 'HLTPaths' and also
+# uncomment the snippet at the end of the configuration.
+#############################################################
+# Minimum bias trigger selection (later runs)
+process.load("HLTrigger.HLTfilters.hltHighLevel_cfi")
+process.skimFilter = process.hltHighLevel.clone()
+#process.skimFilter.HLTPaths = ["HLT_HIJet80_v*"]
+#process.skimFilter.HLTPaths = ["HLT_HIJet55_v*",
+#                               "HLT_HIJet65_v*",
+#                               "HLT_HIJet80_v*",
+#                               "HLT_HIJet95_v*"
+#							   "HLT_HIDiJet55_v*",
+#                               "HLT_HIJet65_Jet55_v*"
+#							   ]
+#process.skimFilter.HLTPaths = ["HLT_HIMinBiasHfOrBSC_*",
+#                               "HLT_HIUCC*_*"
+#						       ]
+process.skimFilter.HLTPaths = ["HLT_HIMinBiasHfOrBSC_v*"]
 
-#if hltFilter:
-#    process.load("HLTrigger.HLTfilters.hltHighLevel_cfi")
-#    process.hltHighLevel.HLTPaths = [hltFilter]
-#    process.hltHighLevel.TriggerResultsTag = cms.InputTag(trigResults)
-#    process.superFilterSequence = cms.Sequence(process.hltHighLevel)
-#    process.superFilterPath = cms.Path(process.superFilterSequence)
-#    #process.skimanalysis.superFilters = cms.vstring("superFilterPath")
-#    for path in process.paths:
-#        getattr(process,path)._seq = process.superFilterSequence*getattr(process,path)._seq
-#
-#    process.superFilterPath.remove(process.hltHighLevel)
-#
-
-#process.schedule = cms.Schedule(process.ana_step, process.OpenHfTree_step, process.RegitOpenHfTree_step, process.pAna)
+process.superFilterSequence = cms.Sequence(process.skimFilter)
+process.superFilterPath = cms.Path(process.superFilterSequence)
+process.skimanalysis.superFilters = cms.vstring("superFilterPath")
+################################################################
+#Filtering
+for path in process.paths:
+    getattr(process,path)._seq = process.superFilterSequence*getattr(process,path)._seq
