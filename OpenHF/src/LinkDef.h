@@ -7,8 +7,11 @@
 #include "../interface/hfcand.hh"
 #include "../interface/hfcand_v0.hh"
 #include "../interface/hfcand_v1.hh"
+#include "../interface/hfcand_v2.hh"
 #include "../interface/snglhfcand.hh"
 #include "../interface/snglhfcand_v0.hh"
+#include "../interface/snglhfcand_v1.hh"
+#include "../interface/snglhfcand_v2.hh"
 #include "../interface/candAna.hh"
 #include "../interface/mapRunLumiHfTreeFile.hh"
 #include "../interface/FindUsefulTrigger.hh"
@@ -35,10 +38,12 @@
 #pragma link C++ class map_info+;
 #pragma link C++ class hfcand+; 
 #pragma link C++ class hfcand_v0+; 
-#pragma link C++ class hfcand_v1+; 
+#pragma link C++ class hfcand_v1+;
+#pragma link C++ class hfcand_v2+;
 #pragma link C++ class snglhfcand+; 
 #pragma link C++ class snglhfcand_v0+; 
-#pragma link C++ class snglhfcand_v1+; 
+#pragma link C++ class snglhfcand_v1+;
+#pragma link C++ class snglhfcand_v2+;
 #pragma link C++ class candAna+; 
 #pragma link C++ class mapRunLumiHfTreeFile+; 
 #pragma link C++ class FindUsefulTrigger+; 

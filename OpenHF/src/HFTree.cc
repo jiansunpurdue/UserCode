@@ -58,7 +58,7 @@ HFTree::HFTree(const edm::ParameterSet& iConfig) :
     fPrintFrequency(iConfig.getUntrackedParameter<int>("printFrequency", 1000)),
     isMC(iConfig.getUntrackedParameter<bool>("isMC", false)), 
     cut_ffls3d_in(iConfig.getUntrackedParameter<double>("cut_ffls3d_in", -1.0)), 
-    cut_alpha0_in(iConfig.getUntrackedParameter<double>("cut_alpha0_in", 0.5)), 
+    cut_alpha0_in(iConfig.getUntrackedParameter<double>("cut_alpha0_in", 9.0)), 
     associateChi2(iConfig.getUntrackedParameter<bool>("associateChi2", false)), 
     trackSrc_(iConfig.getUntrackedParameter<InputTag>("tracksLabel", InputTag("generalTracks"))), 
     tpFakeSrc_(iConfig.getUntrackedParameter<InputTag>("tpFakeLabel", InputTag("mergedtruth", "MergedTrackTruth"))) 

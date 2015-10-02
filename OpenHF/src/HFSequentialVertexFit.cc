@@ -342,6 +342,12 @@ TAnaCand *HFSequentialVertexFit::addCandidate(HFDecayTree *tree, VertexState *wr
         cout << "-----------------------------------------" << endl;
     }
 
+    if( isPbPb && chi.probability() < 0.05 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ))
+    {
+         pCand = NULL;
+         return pCand;
+    }
+
     anaVtx.setInfo(kinParticle->chiSquared(),kinParticle->degreesOfFreedom(),chi.probability(),0,-1);
     anaVtx.fPoint.SetXYZ(kinVertex->position().x(),kinVertex->position().y(),kinVertex->position().z());
 
@@ -472,7 +478,7 @@ TAnaCand *HFSequentialVertexFit::addCandidate(HFDecayTree *tree, VertexState *wr
         anaVtx.fD3d = a3d.distance(*wrtVertexState, kinVertex->vertexState()).value();
         anaVtx.fD3dE = a3d.distance(*wrtVertexState, kinVertex->vertexState()).error();
 
-        if( isPbPb && !isMC && anaVtx.fD3d/anaVtx.fD3dE < 1.8 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ))
+        if( isPbPb && anaVtx.fD3d/anaVtx.fD3dE < 2.0 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ))
         {
              pCand = NULL;
              return pCand;
@@ -488,6 +494,13 @@ TAnaCand *HFSequentialVertexFit::addCandidate(HFDecayTree *tree, VertexState *wr
         const GlobalVector diff = kinVertex->vertexState().position() - wrtVertexState->position() ;
         const TVector3 tv3diff = TVector3(diff.x(),diff.y(),diff.z());
         vtxDistanceCosAlphaPlab = plab.Dot(tv3diff) / (plab.Mag() * tv3diff.Mag());
+
+		if( isPbPb && TMath::ACos(vtxDistanceCosAlphaPlab) > 0.20 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ) )
+		{
+			pCand = NULL;
+			return pCand;
+		}
+
     } else if (pvIx >= 0) {
         // -- Distance w.r.t primary vertex
         AdaptiveVertexFitter avf; // PV refit
@@ -526,7 +539,7 @@ TAnaCand *HFSequentialVertexFit::addCandidate(HFDecayTree *tree, VertexState *wr
         anaVtx.fD3d = a3d.distance(currentPV,kinVertex->vertexState()).value();
         anaVtx.fD3dE = a3d.distance(currentPV,kinVertex->vertexState()).error();
 
-        if( isPbPb && !isMC && anaVtx.fD3d/anaVtx.fD3dE < 1.8 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ))
+        if( isPbPb && anaVtx.fD3d/anaVtx.fD3dE < 2.0 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ))
         {
             pCand = NULL;
             return pCand;
@@ -552,6 +565,12 @@ TAnaCand *HFSequentialVertexFit::addCandidate(HFDecayTree *tree, VertexState *wr
         const TVector3 p2(kinVertex->vertexState().position().x(), kinVertex->vertexState().position().y(), kinVertex->vertexState().position().z());
         const TVector3 pDiff = p2-p1;
         vtxDistanceCosAlphaPlab = plab.Dot(pDiff) / (plab.Mag() * pDiff.Mag());
+
+		if( isPbPb && TMath::ACos(vtxDistanceCosAlphaPlab) > 0.20 && ( tree->particleID() == 2 || tree->particleID() == 3 || tree->particleID() == 4 || tree->particleID() == 5 ) )
+		{
+			pCand = NULL;
+			return pCand;
+		}
 
         currentPV = (*fPVCollection)[pvIx];
         if(!isPbPb) {

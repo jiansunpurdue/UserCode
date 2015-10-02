@@ -18,9 +18,15 @@ class hfcand : public TNamed
 
     virtual void set_runNum(const long int in) {WarningMSG();}
     virtual void set_evtNum(const long int in) {WarningMSG();}
+	virtual void set_BSx(const float in) {WarningMSG();}
+	virtual void set_BSy(const float in) {WarningMSG();}
+	virtual void set_BSz(const float in) {WarningMSG();}
 
     virtual long int get_runNum() {WarningMSG(); return 0;}
     virtual long int get_evtNum() {WarningMSG(); return 0;}
+	virtual float get_BSx() {WarningMSG(); return 0;}
+	virtual float get_BSy() {WarningMSG(); return 0;}
+	virtual float get_BSz() {WarningMSG(); return 0;}
 
     // Routines to manipulate the particle array...
     virtual void AddCand(const unsigned int itrk) {WarningMSG();}

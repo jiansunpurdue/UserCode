@@ -47,9 +47,10 @@ std::vector<int> HFTrackListBuilder::getTrackList()
 	  }
 	  else
 	  {
-         if( trackView.numberOfValidHits() < 12 ) continue;
-         if( trackView.ptError()/trackView.pt() > 0.075 ) continue;
-         if( trackView.normalizedChi2() / trackView.hitPattern().trackerLayersWithMeasurement() > 0.25 )   continue;
+       if( trackView.numberOfValidHits() < 12 ) continue;
+       if( trackView.ptError()/trackView.pt() > 0.075 ) continue;
+       if( trackView.normalizedChi2() / trackView.hitPattern().trackerLayersWithMeasurement() > 0.25 )   continue;
+       if( trackView.eta() > 1.1 || trackView.eta() < -1.1 )  continue;
 	  }
 	  
 	  if ( !(*this)(ix)) 

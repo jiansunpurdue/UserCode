@@ -66,8 +66,9 @@ void HFD0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
         d0 = ka + pi;
 
-		if ( isPbPb && d0.Pt() < 3.0 )  continue;
-//        if( d0.Eta() < -2.1 || d0.Eta() > 2.1 )   continue;
+        if ( isPbPb && isMC && d0.Pt() < 1.0 )  continue;
+		if ( isPbPb && !isMC && d0.Pt() < 1.0 )  continue;
+//        if( d0.Rapidity() < -1.1 || d0.Rapidity() > 1.1 )   continue; //not necessary actully because of the track eta cut
 
         HFDecayTree theTree(fType, true, MD0, false, -1.0, true);
         theTree.addTrack(iKaon,321);

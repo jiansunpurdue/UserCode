@@ -39,7 +39,7 @@ void candAna::Init(TTree* treeIn)
     else 
         fTree = treeIn;
 
-    hfcandidate = new hfcand_v2;
+    hfcandidate = new hfcand_v1;
     fpEvt = new TAna01Event(0);
 
     fTree->Branch("hfcandidate", &hfcandidate);
@@ -53,9 +53,6 @@ bool candAna::pass_cut(float ffls3d, float falpha0)
 // ----------------------------------------------------------------------
 void candAna::evtAnalysis(TAna01Event *evt) 
 {
-
-    cout << "  start_of_eventanalysis " << endl;
-
     fpEvt = evt; 
 
     ncand = 0;
@@ -103,8 +100,6 @@ void candAna::evtAnalysis(TAna01Event *evt)
             continue;
         }
     }
-
-	cout << "  end_of_eventanalysis " << endl;
 }
 
 // ----------------------------------------------------------------------
@@ -181,33 +176,18 @@ void candAna::D0Analysis()
 	fPlabxy.SetZ(0.);
 
 	alpha0xy = t1xy.Angle(fPlabxy);
-//
-//    cout << "pv: " << pv.X() << "  " << pv.Y() << "   " << pv.Z() << endl;
-//    cout << "sv: " << sv1.X() << "  " << sv1.Y() << "   " << sv1.Z() << endl;
-//	cout << "plab: " << fpCand->fPlab.X() << "  " << fpCand->fPlab.Y() << "  " << fpCand->fPlab.Z() << endl;
-//    cout << "xyz: " << sv.fD3d << "   " << alpha0 << endl;
-//	cout << "xy: " << sv.fDxy << "   " << alpha0xy << endl;
-//	cout << endl;
-//
+
+    cout << "xyz: " << fls3d << "   " << alpha0 << endl;
+	cout << "xy: " << flsxy << "   " << alpha0xy << endl;
+
+
+
     //.. fill the hfcand ...
 //    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, -1, fpCand->fType, pt, mdz, eta, phi, -999, -999, -999, -999, -999, -999, -999, -999, -999, qPi, ptPi, etaPi, phiPi, index1, qK, ptK, etaK, phiK, index2);
-    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, -1, fpCand->fType, pt, mdz, eta, phi, -999, -999, -999, -999, -999, -999, -999, -999, -999, qPi, ptPi, etaPi, phiPi, index1, qK, ptK, etaK, phiK, index2, sv.fDxy, sv.fDxyE, flsxy, alpha0xy, sv1.X(), sv1.Y(), sv1.Z());
+    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, -1, fpCand->fType, pt, mdz, eta, phi, -999, -999, -999, -999, -999, -999, -999, -999, -999, qPi, ptPi, etaPi, phiPi, index1, qK, ptK, etaK, phiK, index2, sv.fDxy, sv.fDxyE, flsxy, alpha0xy);
 }
 
-void candAna::DstarAnalysis()
-{ return;}
-
-void candAna::Dpm2KaPiPiAnalysis()
-{ return;}
-
-void candAna::Ds2KstarKaonAnalysis()
-{ return;}
-
-void candAna::Ds2PhiPiAnalysis()
-{ return;}
-
 //-----------------------------------------------------------------
-/*
 void candAna::DstarAnalysis() 
 {
     TAnaCand *pC(0);
@@ -302,7 +282,7 @@ void candAna::DstarAnalysis()
     if( (qPi+qPis)==0 ) return; // skip wrong sign decys 
 
     //.. fill the hfcand ...
-    addCandidate(prob, svD0.fD3d, svD0.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mdstar, eta, phi, mdz, ptdz, etadz, phidz, qPis, ptPis, etaPis, phiPis, index_dau2, qPi, ptPi, etaPi, phiPi, index1, qK, ptK, etaK, phiK, index2);
+//    addCandidate(prob, svD0.fD3d, svD0.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mdstar, eta, phi, mdz, ptdz, etadz, phidz, qPis, ptPis, etaPis, phiPis, index_dau2, qPi, ptPi, etaPi, phiPi, index1, qK, ptK, etaK, phiK, index2);
 }
 
 //_________________________________________________________________________
@@ -396,7 +376,7 @@ void candAna::Dpm2KaPiPiAnalysis()
     dr = piSlowMom.Angle(fpCand->fPlab); // pislow openinig
 
     //.. fill the hfcand ...
-    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mdpm, eta, phi, mkpi, ptkpi, etakpi, phikpi, qPi2, ptPi2, etaPi2, phiPi2, index_dau2, qPi1, ptPi1, etaPi1, phiPi1, index1, qK, ptK, etaK, phiK, index2);
+//    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mdpm, eta, phi, mkpi, ptkpi, etakpi, phikpi, qPi2, ptPi2, etaPi2, phiPi2, index_dau2, qPi1, ptPi1, etaPi1, phiPi1, index1, qK, ptK, etaK, phiK, index2);
 
 }
 
@@ -498,7 +478,7 @@ void candAna::Ds2KstarKaonAnalysis()
     dr = piSlowMom.Angle(fpCand->fPlab); // pislow openinig
 
     //.. fill the hfcand ...
-    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mds, eta, phi, mkpi, ptkpi, etakpi, phikpi, qK2, ptK2, etaK2, phiK2, index_dau2, qPi, ptPi, etaPi, phiPi, index1, qK1, ptK1, etaK1, phiK1, index2);
+//    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mds, eta, phi, mkpi, ptkpi, etakpi, phikpi, qK2, ptK2, etaK2, phiK2, index_dau2, qPi, ptPi, etaPi, phiPi, index1, qK1, ptK1, etaK1, phiK1, index2);
 
 }
 
@@ -602,9 +582,8 @@ void candAna::Ds2PhiPiAnalysis()
     dr = piSlowMom.Angle(fpCand->fPlab); // pislow openinig
 
     //.. fill the hfcand ...
-    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mds, eta, phi, mPhi, ptPhi, etaPhi, phiPhi, qPi, ptPi, etaPi, phiPi, index_dau2, qK1, ptK1, etaK1, phiK1, index1, qK2, ptK2, etaK2, phiK2, index2);
+//    addCandidate(prob, sv.fD3d, sv.fD3dE, fls3d, chi2, alpha0, dr, fpCand->fType, pt, mds, eta, phi, mPhi, ptPhi, etaPhi, phiPhi, qPi, ptPi, etaPi, phiPi, index_dau2, qK1, ptK1, etaK1, phiK1, index1, qK2, ptK2, etaK2, phiK2, index2);
 }
-*/
 
 //__________________________________________
 void candAna::addCandidate(
@@ -638,14 +617,7 @@ void candAna::addCandidate(
         float fpt2,
         float feta2,
         float fphi2, 
-        int   index2,
-		float ffxy,
-		float ffxye,
-		float fflsxy,
-		float falpha0xy,
-		float svx,
-		float svy,
-		float svz)
+        int   index2)
 {
 
    if(!pass_cut(ffls3d, falpha0)) 
@@ -685,13 +657,6 @@ void candAna::addCandidate(
     hfcandidate->get_hfcand(ncand)->set_Index_dau2(index_dau2);
     hfcandidate->get_hfcand(ncand)->set_Index1(index1);
     hfcandidate->get_hfcand(ncand)->set_Index2(index2);
-	hfcandidate->get_hfcand(ncand)->set_ffxy(ffxy);
-	hfcandidate->get_hfcand(ncand)->set_ffxye(ffxye);
-	hfcandidate->get_hfcand(ncand)->set_fflsxy(fflsxy);
-	hfcandidate->get_hfcand(ncand)->set_falpha0xy(falpha0xy);
-	hfcandidate->get_hfcand(ncand)->set_svx(svx);
-	hfcandidate->get_hfcand(ncand)->set_svy(svy);
-	hfcandidate->get_hfcand(ncand)->set_svz(svz);
 
     ncand++;
 }

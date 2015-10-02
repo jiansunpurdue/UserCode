@@ -83,16 +83,6 @@ class snglhfcand : public TNamed
         virtual int get_nBPixLayer1Hits_2() const{WarningMSG(); return 0;}
         virtual int get_nTrackerLayer_2() const{WarningMSG(); return 0;}
 
-		//.. 2D topology cut
-        virtual float get_ffxy() const{WarningMSG(); return 0;}
-        virtual float get_ffxye() const{WarningMSG(); return 0;}
-        virtual float get_fflsxy() const{WarningMSG(); return 0;}
-        virtual float get_falpha0xy() const{WarningMSG(); return 0;}
-
-		virtual float get_svx() const{WarningMSG(); return 0;}
-		virtual float get_svy() const{WarningMSG(); return 0;}
-		virtual float get_svz() const{WarningMSG(); return 0;}
-
 
         //_________________________________________
         virtual void set_vtz(const float in) {WarningMSG();}
@@ -167,16 +157,6 @@ class snglhfcand : public TNamed
         virtual void set_nPixLayer_2(const int in) {WarningMSG();}
         virtual void set_nBPixLayer1Hits_2(const int in) {WarningMSG();}
         virtual void set_nTrackerLayer_2(const int in) {WarningMSG();}
-        
-		//.. 2D topology cut
-        virtual void set_ffxy(const float in) {WarningMSG();}
-        virtual void set_ffxye(const float in) {WarningMSG();}
-        virtual void set_fflsxy(const float in) {WarningMSG();}
-        virtual void set_falpha0xy(const float in) {WarningMSG();}
-
-		virtual void set_svx(const float in) {WarningMSG();}
-		virtual void set_svy(const float in) {WarningMSG();}
-		virtual void set_svz(const float in) {WarningMSG();}
 
     private:
         void WarningMSG() const {cout<<"!!!!snglhfcand: the function not implemented in daughter class"<<endl;}

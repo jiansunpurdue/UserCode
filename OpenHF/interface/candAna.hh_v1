@@ -10,7 +10,7 @@
 #include <TNamed.h>
 #include <TTree.h>
 
-#include "hfcand_v2.hh"
+#include "hfcand_v1.hh"
 #include "TAna01Event.hh"
 #include "TAnaCand.hh"
 #include "TAnaVertex.hh"
@@ -67,14 +67,8 @@ class candAna : public TNamed
                 float fq2,
                 float feta2,
                 float fphi2,
-                int   index2,
-				float ffxy,
-				float ffxye,
-				float fflsxy,
-				float falpha0xy,
-				float svx,
-				float svy,
-				float svz); 
+                int   index2); 
+
 
 
         void D0Analysis();

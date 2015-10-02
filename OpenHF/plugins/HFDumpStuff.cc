@@ -122,6 +122,8 @@ void HFDumpStuff::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     bs.fPoint.SetXYZ(x0, y0, z0); 
     gHFEvent->fBeamSpot = bs;
 
+//	cout << "beam spot: " << x0 << "    " << y0 << "    " << z0 << endl;
+
     // -- Primary vertex
     int bestPV(-1), bestN(-1), cnt(0); 
     try {
